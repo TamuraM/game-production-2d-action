@@ -10,8 +10,9 @@ public class Bullet : MonoBehaviour
     {
         //当たり判定をしたい敵たちを取ってくるんだけど、重そう
         var targets = GameObject.FindGameObjectsWithTag("Enemy");
+        var circle = GameObject.FindGameObjectsWithTag("EnemyCircle");
 
-        for(int i = 0; i < targets.Length; i++)
+        for (int i = 0; i < targets.Length; i++)
         {
             //敵を矩形、自分(弾)を矩形として判定
             bool isHitX = Mathf.Abs(transform.position.x - targets[i].transform.position.x)
@@ -19,9 +20,31 @@ public class Bullet : MonoBehaviour
             bool isHitY = Mathf.Abs(transform.position.y - targets[i].transform.position.y)
                 <= transform.localScale.y / 2 + targets[i].transform.localScale.y / 2; //y座標が重なっているか
 
-            if(isHitX && isHitY)
+            if (isHitX && isHitY)
             {
                 targets[i].GetComponent<IDamageable>().Damage(1);
+                Destroy(gameObject);
+            }
+
+        }
+
+        for (int i = 0; i < circle.Length; i++)
+        {
+            //敵を円、自分を矩形として判定
+            Vector2 ul = transform.position + new Vector3(-transform.localScale.x / 2, transform.localScale.y / 2);
+            Vector2 ur = transform.position + new Vector3(transform.localScale.x / 2, transform.localScale.y / 2);
+            Vector2 dl = transform.position + new Vector3(-transform.localScale.x / 2, -transform.localScale.y / 2);
+            Vector2 dr = transform.position + new Vector3(transform.localScale.x / 2, -transform.localScale.y / 2);
+
+            //四隅のどこかが入ってれば当たってる
+            bool isHitting = Mathf.Pow(ul.x - circle[i].transform.position.x, 2) + Mathf.Pow(ul.y - circle[i].transform.position.y, 2) <= Mathf.Pow(circle[i].transform.localScale.x / 2, 2)
+                || Mathf.Pow(ur.x - circle[i].transform.position.x, 2) + Mathf.Pow(ur.y - circle[i].transform.position.y, 2) <= Mathf.Pow(circle[i].transform.localScale.x / 2, 2)
+                || Mathf.Pow(dl.x - circle[i].transform.position.x, 2) + Mathf.Pow(dl.y - circle[i].transform.position.y, 2) <= Mathf.Pow(circle[i].transform.localScale.x / 2, 2)
+                || Mathf.Pow(dr.x - circle[i].transform.position.x, 2) + Mathf.Pow(dr.y - circle[i].transform.position.y, 2) <= Mathf.Pow(circle[i].transform.localScale.x / 2, 2);
+
+            if(isHitting)
+            {
+                circle[i].GetComponent<IDamageable>().Damage(1);
                 Destroy(gameObject);
             }
 
