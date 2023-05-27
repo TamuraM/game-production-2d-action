@@ -14,7 +14,7 @@ public class PlayerRotation : MonoBehaviour
 
         transform.position = pos;
 
-        float angle = Mathf.Atan2(pos.y - _player.position.y, pos.x - _player.position.x);
+        float angle = Mathf.Atan2(pos.y - _player.position.y, pos.x - _player.position.x); //引数を二つ持つアークタンジェント
         _player.rotation = Quaternion.AngleAxis(angle * 180 / Mathf.PI, new Vector3(0, 0, 1));
     }
 

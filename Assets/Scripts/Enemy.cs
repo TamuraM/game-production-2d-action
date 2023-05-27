@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private GameObject _bullet = default;
+    [SerializeField] private BulletManager _bulletManager = null;
     [SerializeField] private Transform _player = default;
     [SerializeField] private float _x = 5;
     [SerializeField] private float _y = 5;
@@ -14,28 +15,26 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        
-        if(_player == null)
-        {
-            _player = GameObject.FindObjectOfType<Player>().transform;
-        }
-
+        _player = GameObject.FindObjectOfType<Player>().transform;
+        _bulletManager = GameObject.FindObjectOfType<BulletManager>();
+        _bulletManager.AddEnemy(transform);
     }
 
     void Update()
     {
         bool isNearyPlayer = Mathf.Abs(transform.position.x - _player.position.x) <= _x
-            && Mathf.Abs(transform.position.y - _player.position.y) <= _y;
+            && Mathf.Abs(transform.position.y - _player.position.y) <= _y; //“ñ“_ŠÔ‚Ì‹——£‚©‚ç”»’è‚µ‚½‚Ù‚¤‚ª‚æ‚³‚»‚¤
 
         if (isNearyPlayer)
         {
             _timer += Time.deltaTime;
 
             //‚±‚¤‚°‚«
-            if(_timer >= 1)
+            if (_timer >= 1)
             {
                 Vector3 shotPos = new Vector3(transform.position.x - transform.localScale.x, transform.position.y, 0);
-                Instantiate(_bullet, shotPos, this.transform.rotation);
+                var bullet = Instantiate(_bullet, shotPos, this.transform.rotation);
+                _bulletManager.AddEnemyBullet(bullet);
                 _timer = 0;
             }
 
@@ -47,7 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         _life -= damage;
 
-        if( _life <= 0 )
+        if (_life <= 0)
         {
             Destroy(gameObject);
         }

@@ -27,5 +27,7 @@ public class EnemyBullet : MonoBehaviour
         }
 
         transform.position += _speed * Time.deltaTime * -transform.right;
+
+        if(transform.position.x < -10) Destroy(gameObject);
     }
 }

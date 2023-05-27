@@ -7,6 +7,7 @@ public class Player : MonoBehaviour, IDamageable
 {
     private InputAction _bangAction, _moveAction, _jumpAction;
     [SerializeField] private GameObject _bullet = default;
+    [SerializeField] private BulletManager _bulletManager;
 
     [SerializeField] private float _speed = 3;
     [SerializeField] private float _life = 5;
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour, IDamageable
         float moveX = transform.position.x + _moveAction.ReadValue<float>() * _speed * Time.deltaTime;
         float moveY = transform.position.y;
 
-        if (_isJumping > 0)
+        if (_isJumping > 0) //ジャンプしている間
         {
             //参考：https://www.youtube.com/watch?v=zxOBCjqP8-Y&list=PLi8SA3sbzYVSQmkQUa-zz7BcKL8YWAt8a&index=3
             moveY += _nowJumpPower * Time.deltaTime;
@@ -62,7 +63,8 @@ public class Player : MonoBehaviour, IDamageable
     private void Bang(InputAction.CallbackContext context)
     {
         Vector3 bulletShotPos = transform.position + transform.right * transform.localScale.x;
-        Instantiate(_bullet, bulletShotPos, this.transform.rotation);
+        var bullet = Instantiate(_bullet, bulletShotPos, this.transform.rotation);
+        _bulletManager.AddPlayerBullet(bullet);
     }
 
     private void Jump(InputAction.CallbackContext context)
