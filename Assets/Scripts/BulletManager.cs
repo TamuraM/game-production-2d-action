@@ -12,6 +12,7 @@ public class BulletManager : MonoBehaviour
     [SerializeField] private float _playerBulletSpeed = 4f;
     [SerializeField] private List<GameObject> _enemyBullets = new List<GameObject>();
     [SerializeField] private float _enemyBulletSpeed = 4f;
+    [SerializeField] private Transform _laswer = default;
       
     void Update()
     {
@@ -52,6 +53,19 @@ public class BulletManager : MonoBehaviour
             }
 
         }
+
+        //ÉåÅ[ÉUÅ[
+        if(_laswer)
+        {
+            bool isAttackLaswer = false;
+
+            //ìGÇ∆
+
+            //ìGÇÃíeÇ∆
+
+            if (isAttackLaswer) _laswer = default;
+        }
+        
 
         //ìGÇÃíe
         foreach (var eb in _enemyBullets)
@@ -99,6 +113,11 @@ public class BulletManager : MonoBehaviour
     public void SetPlayer(Transform player)
     {
         _player = player;
+    }
+
+    public void SetLaser(Transform laser)
+    {
+        _laswer = laser;
     }
 
 }

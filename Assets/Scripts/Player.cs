@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,11 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    private InputAction _bangAction, _moveAction, _jumpAction;
+    private InputAction _bangAction, _moveAction, _jumpAction, _shotAction;
     [SerializeField] private GameObject _bullet = default;
+    [SerializeField] private GameObject _laser = default;
     [SerializeField] private BulletManager _bulletManager;
+    [SerializeField] private bool _isShotingLaser = false;
 
     [SerializeField] private float _speed = 3;
     [SerializeField] private float _life = 5;
@@ -25,8 +28,11 @@ public class Player : MonoBehaviour, IDamageable
         _bangAction = actionMap["Bang"];
         _moveAction = actionMap["Move"];
         _jumpAction = actionMap["Jump"];
+        _shotAction = actionMap["Shot"];
+
         _bangAction.performed += Bang;
         _jumpAction.performed += Jump;
+        _shotAction.performed += Shot;
 
         _nowJumpPower = _maxJumpPower;
         _minY = transform.position.y;
@@ -60,13 +66,17 @@ public class Player : MonoBehaviour, IDamageable
         _life -= damage;
     }
 
+    //通常弾を撃つ
     private void Bang(InputAction.CallbackContext context)
     {
+        if (_isShotingLaser) return;
+
         Vector3 bulletShotPos = transform.position + transform.right * transform.localScale.x;
         var bullet = Instantiate(_bullet, bulletShotPos, this.transform.rotation);
         _bulletManager.AddPlayerBullet(bullet);
     }
 
+    //ジャンプする
     private void Jump(InputAction.CallbackContext context)
     {
 
@@ -83,6 +93,30 @@ public class Player : MonoBehaviour, IDamageable
             return;
         }
 
+    }
+
+    //ビームを撃つ
+    private void Shot(InputAction.CallbackContext context)
+    {
+        if (_isShotingLaser) return;
+        StartCoroutine(LaserShot(12));
+        Debug.Log("ビーム");
+    }
+
+    private IEnumerator LaserShot(int waitFrame)
+    {
+        //参考：https://qiita.com/toRisouP/items/e6d4f114d434ee588044
+        var shotLaser = Instantiate(_laser, transform.position, transform.rotation);
+        _bulletManager.SetLaser(shotLaser.transform);
+        _isShotingLaser = true;
+
+        for(int i = 0; i < waitFrame; i++)
+        {
+            yield return null;
+        }
+
+        Destroy(shotLaser);
+        _isShotingLaser = false;
     }
 
 }

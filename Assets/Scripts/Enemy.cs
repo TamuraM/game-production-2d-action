@@ -7,8 +7,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private GameObject _bullet = default;
     [SerializeField] private BulletManager _bulletManager = null;
     [SerializeField] private Transform _player = default;
-    [SerializeField] private float _x = 5;
-    [SerializeField] private float _y = 5;
+    [SerializeField] private float _nearyDistance = 5;
     private float _timer = 1;
 
     [SerializeField] private int _life = 3;
@@ -22,8 +21,10 @@ public class Enemy : MonoBehaviour, IDamageable
 
     void Update()
     {
-        bool isNearyPlayer = Mathf.Abs(transform.position.x - _player.position.x) <= _x
-            && Mathf.Abs(transform.position.y - _player.position.y) <= _y; //“ñ“_ŠÔ‚Ì‹——£‚©‚ç”»’è‚µ‚½‚Ù‚¤‚ª‚æ‚³‚»‚¤
+        //bool isNearyPlayer = Mathf.Abs(transform.position.x - _player.position.x) <= _x
+        //    && Mathf.Abs(transform.position.y - _player.position.y) <= _y; //“ñ“_ŠÔ‚Ì‹——£‚©‚ç”»’è‚µ‚½‚Ù‚¤‚ª‚æ‚³‚»‚¤
+
+        bool isNearyPlayer = Vector3.Distance(transform.position, _player.transform.position) < _nearyDistance;
 
         if (isNearyPlayer)
         {
