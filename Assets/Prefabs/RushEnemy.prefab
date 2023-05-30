@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rushSpeed: 5
   _knockBackSpeed: 7
-  _interval: 1
-  _rushDistance: 5
+  _interval: 0.7
+  _rushDistance: 3
   _isRush: 0
   _isCollisionPlayer: 0

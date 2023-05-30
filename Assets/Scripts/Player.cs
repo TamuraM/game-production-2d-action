@@ -66,6 +66,16 @@ public class Player : MonoBehaviour, IDamageable
         _life -= damage;
     }
 
+    private IEnumerator KnockBack(int waitFrame)
+    {
+
+        for(int i = 0; i < waitFrame; i++)
+        {
+            yield return null;
+        }
+
+    }
+
     //’Êí’e‚ðŒ‚‚Â
     private void Bang(InputAction.CallbackContext context)
     {

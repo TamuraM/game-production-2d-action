@@ -57,6 +57,9 @@ public class BulletManager : MonoBehaviour
         //レーザー
         if(_laswer)
         {
+            //参考：http://marupeke296.com/COL_3D_No13_OBBvsOBB.html
+            //コピペでもいい
+
             bool isAttackLaswer = false;
 
             //敵と

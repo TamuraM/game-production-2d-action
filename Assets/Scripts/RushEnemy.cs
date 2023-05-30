@@ -12,6 +12,7 @@ public class RushEnemy : MonoBehaviour
     private Transform _player = default;
     [SerializeField] private float _rushDistance = 5f;
     private Vector3 _direction = Vector3.up;
+    //boolたくさん用意するなら、Stateで分けた方がよさそう(ステートパターン)
     [SerializeField] private bool _isRush = false;
     [SerializeField] private bool _isCollisionPlayer = false;
 

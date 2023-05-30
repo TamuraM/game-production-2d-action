@@ -318,7 +318,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -999
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -361,7 +361,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &281997642
 Transform:
   m_ObjectHideFlags: 0
@@ -394,13 +394,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1597514643}
-  _enemy: {fileID: 4138393121572679186, guid: 24cee53577698794ea9c63e15b993aa3, type: 3}
+  _enemy: {fileID: 5069638942601072598, guid: 185e89007f0b1124a80b63add6fb8d46, type: 3}
   _spawnPoints:
   - {fileID: 1998306902}
   - {fileID: 303088528}
   - {fileID: 1505458016}
   - {fileID: 1387690481}
-  _spawnDistance: 3
+  _spawnDistance: 8
   _spawnInterval: 2
 --- !u!1 &303088527
 GameObject:
@@ -628,7 +628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1518856368
 SpriteRenderer:
   m_ObjectHideFlags: 0
